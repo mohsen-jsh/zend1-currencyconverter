@@ -75,5 +75,54 @@ class Application_Service_ExchangeService
     {
         return $this->exchangeModel->getPrevExchanges($number);
     }
+    
+    /**
+     * update exchange rate of currencies by calling API
+     *
+     */
+    public function updateExchangeRate() 
+    {
+    	$currencies = $this->getCurrencies();
+
+    	$sources = [];
+        // array of all symbols
+    	foreach($currencies as $currency) {
+            $sources[] = $currency['symbol'];
+    	}
+        
+        // gat rates
+    	$FixerExchangeApiService = new Application_Service_FixerExchangeApiService();
+        $rates_original = $FixerExchangeApiService->getAllRates($sources);
+        
+        $rates_for_db = array();
+        
+        // create array of currencies with symbol is key for getting currency info with symbol 
+        $currencies_symbol_key = [];
+        foreach($currencies as $currency) {
+            $currencies_symbol_key[$currency['symbol']] = $currency;
+    	}
+        
+        foreach($rates_original as $rate_from_symbol => $rs) {
+            
+            foreach($rs as $to_symbol => $to_rate) {
+                
+                // if currency is not in our currencies table just ignore and continue
+                if(!isset($currencies_symbol_key[$to_symbol])) {
+                    continue;
+                }
+                
+                $rates_for_db[] = [
+                    'currency_from_id' => $currencies_symbol_key[$rate_from_symbol]['id'],
+                    'currency_to_id' => $currencies_symbol_key[$to_symbol]['id'],
+                    'rate' => $to_rate,
+                    'created_at' => date('Y-m-d H:i:s')
+                ];
+            }
+            
+        }
+        
+        // store rates into db
+        $this->exchangeModel->storeRates($rates_for_db);
+    }
 
 }

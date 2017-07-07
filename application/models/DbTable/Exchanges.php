@@ -88,5 +88,22 @@ class Application_Model_DbTable_Exchanges extends Zend_Db_Table_Abstract
 
         return $select->query()->fetchAll();
     }
+    
+    /**
+     * store rates into exchanges db
+     * @param array $rates array of rates like ['USD' => ['GBP', '']]
+     */
+    public function storeRates($rates)
+    {        
+        $query = 'INSERT INTO `exchanges` (`currency_from_id`, `currency_to_id`, `rate`, `created_at`) VALUES ';
+        $queryVals = array();
+        foreach ($rates as $row) {
+            foreach($row as &$col) {
+                $col = $this->db->quote($col);
+            }
+            $queryVals[] = '(' . implode(',', $row) . ')';
+        }
+        $this->db->query($query . implode(',', $queryVals));        
+    }
 }
 
