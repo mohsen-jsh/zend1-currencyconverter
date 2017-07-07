@@ -1,0 +1,138 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: table;
+    font-weight: 100;
+    font-family: 'Lato';
+}
+
+.container {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.content {
+    text-align: center;
+    display: inline-block;
+}
+
+.title {
+    font-size: 96px;
+}
+
+
+
+#exchangeResult {
+    background-color: #f1f1f1;
+    /* min-height: 54px; */
+    text-align: center;
+    padding: 20px 6px;
+    color: #ff3131;
+    font-weight: bold;
+    font-size: 18px;
+    /* padding-top: 7px; */
+}
+
+#amountInput, #fromInput, #toInput {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    /*height: 30px;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;*/
+}
+#amountInput {
+    padding: 1px 0;
+}
+.btn {
+    display: inline-block;
+    padding: 10px 16px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #ff7e5a;
+    border-color: #ff653b;
+}
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+    float: left;
+}
+#exchageForm{
+    border: 3px solid #f1f1f1;
+    padding: 20px 15px;
+}
+#amount_error, #from_error, #to_error{
+    color: #ff0b0b;
+    /* font-size: smaller;*/
+    font-style: italic;
+    display: block;
+    min-height: 18px;
+}
+#exchangeInputBtn  {
+    cursor: pointer;
+}
+#exchangeInputBtn img {
+    width: 30px;
+}
+div#exchangeResult-w {
+    margin-top: 12px;
+}
+div#exchangeResult-label {
+    text-align: left;
+    font-weight: bold;
+}
+
+div#prevExchanges {
+    background-color: beige;
+    text-align: left;
+    padding: 1px 10px;
+    margin-bottom: 7px;
+}
+#prevExchangesTitle{
+    font-weight: bold;
+    color: #ff7e5a;
+    font-size: 17px;
+}
+h1{
+    color: #2db9bd;
+}

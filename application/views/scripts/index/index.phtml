@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Currency Converter</title>
+
+       <?php echo $this->headLink()->appendStylesheet($this->baseUrl().'/css/style.css'); ?>
+    </head>
+    <body>
+        <div class="container">
+            <div class="content">
+                <div>
+                    <h1>Currency Converter</h1>
+                </div>
+                <div id="exchageForm-w">
+                    <div id="prevExchanges">
+                        <p id="prevExchangesTitle">Latest converted currencies</p>
+                        <ul style="text-align: left;">
+                        
+                        </ul>
+                    </div>
+                    <form id="exchageForm">
+                        <div>
+                            <label>amount</label><br/>
+                            <input name="amount" id="amountInput" class="amount" type="number" />
+                            <span id="amount_error"></span>
+                        </div>
+                        <div>
+                            <label>Currency I have</label><br/>
+                            
+                            <select id="fromInput" name="from" class="from">
+                                <?php foreach($this->currencies as $currency) : ?>
+                                <option value="<?php echo $this->escape($currency['id']);?>">
+                                    <?php echo $this->escape($currency['display_name']);?>
+                                </option>
+                            <?php endforeach; ?>
+                            </select>
+                            <span id="from_error"></span>
+                        </div>
+                        <div>
+                        <span id="exchangeInputBtn" onclick="swapCurrencies()"><img src="<?php echo $this->baseUrl('img/exchange.png'); ?>" /></span>
+
+                        </div>
+                        <div>
+                        <label>Currency I want </label><br/>
+                        <select id="toInput" name="to" class="to">
+                            <?php foreach($this->currencies as $currency) : ?>
+                                <option value="<?php echo $this->escape($currency['id']);?>">
+                                    <?php echo $this->escape($currency['display_name']);?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <span id="to_error"></span>
+                        </div>
+                        
+                        
+                        <div>
+                        <input class="btn" type="submit" value="Get Result" />
+                        </div>
+                        <div id="exchangeResult-w">
+                            <div id="exchangeResult-label">Converted Result:</div>
+                        <div id="exchangeResult">
+                            
+                        </div>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+        
+       
+        <?php echo  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-1.9.1.min.js'); ?>
+        <?php echo $this->headScript()->appendFile($this->baseUrl().'/js/script.js'); ?>
+
+    </body>
+</html>
