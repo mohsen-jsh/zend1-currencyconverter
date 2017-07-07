@@ -36,5 +36,34 @@ class Application_Service_ExchangeService
         
         return $amount * $rate;
     }
+    
+    /**
+     * save given currency exchange to db & delete old
+     * @param integer $from from currency id
+     * @param integer $to to currency id
+     * @param String $fromAmount
+     * @param String $toAmount
+     */
+    public function cacheResult($from, $to, $fromAmount, $toAmount) 
+    {
+        // prepare data like columnName => value to save in db
+        $data = [
+                    'currency_from_id' => $from,
+                    'currency_to_id' => $to,
+                    'amount_from' => $fromAmount,
+                    'amount_to' => $toAmount
+                ];
+        
+        // store data
+        $this->exchangeModel->storePreviousexchangereq($data);
+               
+        
+
+        // delete older cached results by chance of 1/30
+        $rand = mt_rand(1,30);
+        if($rand == 10) {
+            $this->exchangeModel->deleteOldPreviousexchangereq();
+        }
+    }
 
 }

@@ -41,5 +41,28 @@ class Application_Model_DbTable_Exchanges extends Zend_Db_Table_Abstract
 
         return $result["rate"];
     }
+    
+    /**
+     * save data to 'Previousexchangereq' table
+     * @param array $data associate array of data to save in db
+     */
+    public function storePreviousexchangereq($data)
+    {
+        // insert method is safe(sql injection)
+        $this->db->insert('previousexchangereq', $data);
+    }
+    
+    /**
+     * delete old cached exchange req and hold only last 5 rows
+     */
+    public function deleteOldPreviousexchangereq()
+    {
+        //$this->db->delete('previousexchangereq')->order('id desc')->limit(18446744073709551615, 5);
+        $deleteQuery = "DELETE FROM `previousexchangereq` WHERE id IN (select id from (select id
+                                           FROM `previousexchangereq`
+                                       ORDER BY `id` DESC
+                                          LIMIT 5, 2147483648) x)";
+        $this->db->query($deleteQuery, 'execute');
+    }
 }
 

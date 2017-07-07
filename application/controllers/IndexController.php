@@ -36,6 +36,8 @@ class IndexController extends Zend_Controller_Action
 
             $toAmount = $this->exchangeService->getExchangeInfo($from, $to, $fromAmount);
 
+            $this->exchangeService->cacheResult($from, $to, $fromAmount, $toAmount);
+
             $data = [
                     'status' => 'success',
                     'toAmount'    => $toAmount,
