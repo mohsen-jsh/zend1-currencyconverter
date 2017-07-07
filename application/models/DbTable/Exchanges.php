@@ -64,5 +64,29 @@ class Application_Model_DbTable_Exchanges extends Zend_Db_Table_Abstract
                                           LIMIT 5, 2147483648) x)";
         $this->db->query($deleteQuery, 'execute');
     }
+    
+    /**
+     * return latest currency Exchanges that user requested
+     * @param integer $number number of rows to return
+     * @return array
+     */
+    public function getPrevExchanges($number)
+    {
+        
+        $select = $this->db->select()
+             ->from(array('p' => 'previousexchangereq'),
+                    array('amount_from', 'amount_to'))
+            ->join(array('c1' => 'currencies'),
+                    'p.currency_from_id = c1.id',
+                    ['from_display_name' => 'display_name'] )
+             ->join(array('c2' => 'currencies'),
+                    'p.currency_to_id = c2.id',
+                    ['to_display_name' => 'display_name'] );
+        
+        // get latest $number items
+        $select->limit($number)->order('p.id desc');
+
+        return $select->query()->fetchAll();
+    }
 }
 

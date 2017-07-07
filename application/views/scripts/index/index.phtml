@@ -15,7 +15,13 @@
                     <div id="prevExchanges">
                         <p id="prevExchangesTitle">Latest converted currencies</p>
                         <ul style="text-align: left;">
-                        
+                            <?php foreach($this->prevExchanges as $prevEx) : ?>
+                            <li>
+                                <?php echo $this->escape($prevEx['from_display_name']) .' '. $this->escape($prevEx['amount_from']);?>
+                                - >
+                               <?php echo $this->escape($prevEx['amount_to']) .' '. $this->escape($prevEx['to_display_name']);?>
+                            </li>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                     <form id="exchageForm">

@@ -65,5 +65,15 @@ class Application_Service_ExchangeService
             $this->exchangeModel->deleteOldPreviousexchangereq();
         }
     }
+    
+    /**
+     * return latest currency Exchanges that user requested
+     * @param integer $number number of rows to return
+     * @return array
+     */
+    public function getPrevExchanges($number)
+    {
+        return $this->exchangeModel->getPrevExchanges($number);
+    }
 
 }

@@ -13,6 +13,10 @@ class IndexController extends Zend_Controller_Action
     {
         $currencies = $this->exchangeService->getCurrencies();
         $this->view->currencies = $currencies;
+        
+        // get 5 latest crrency exchange requests
+        $prevExchanges = $this->exchangeService->getPrevExchanges(5);
+        $this->view->prevExchanges = $prevExchanges;
     }
 
     public function getexchangeinfoAction()
