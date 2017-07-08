@@ -7,6 +7,10 @@ class IndexController extends Zend_Controller_Action
     public function init()
     {
         $this->exchangeService = new Application_Service_ExchangeService();
+        $this->getResponse()->setHeader('Expires', '', true);
+        $this->getResponse()->setHeader('Cache-Control', 'public', true);
+        $this->getResponse()->setHeader('Cache-Control', 'max-age=31536000');
+        $this->getResponse()->setHeader('Pragma', '', true);
     }
 
     public function indexAction()
