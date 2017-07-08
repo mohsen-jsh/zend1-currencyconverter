@@ -29,12 +29,14 @@ class Application_Model_DbTable_Exchanges extends Zend_Db_Table_Abstract
      * @return string
      */
     public function getLatestExchangeRate($from, $to) 
-    {    	
+    {    
+        $from_int = (int)$from;
+        $to_int = (int)$to;
     	$select = $this->db->select()
         ->from('exchanges');
 
-        $select->where("currency_from_id = ?", $from)
-        ->where("currency_to_id = ?", $to)
+        $select->where("currency_from_id = ?", $from_int)
+        ->where("currency_to_id = ?", $to_int)
         ->order('created_at desc');
 
         $result = $select->query()->fetch();
@@ -72,7 +74,7 @@ class Application_Model_DbTable_Exchanges extends Zend_Db_Table_Abstract
      */
     public function getPrevExchanges($number)
     {
-        
+        $number_int = (int)$number;
         $select = $this->db->select()
              ->from(array('p' => 'previousexchangereq'),
                     array('amount_from', 'amount_to'))
@@ -84,7 +86,7 @@ class Application_Model_DbTable_Exchanges extends Zend_Db_Table_Abstract
                     ['to_display_name' => 'display_name'] );
         
         // get latest $number items
-        $select->limit($number)->order('p.id desc');
+        $select->limit($number_int)->order('p.id desc');
 
         return $select->query()->fetchAll();
     }
