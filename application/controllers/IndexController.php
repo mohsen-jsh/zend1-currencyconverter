@@ -21,6 +21,9 @@ class IndexController extends Zend_Controller_Action
         // get 5 latest crrency exchange requests
         $prevExchanges = $this->exchangeService->getPrevExchanges(5);
         $this->view->prevExchanges = $prevExchanges;
+        
+        $this->view->form = new Application_Form_ExchangeForm();
+        
     }
 
     public function getexchangeinfoAction()
@@ -31,7 +34,7 @@ class IndexController extends Zend_Controller_Action
             // Failed validation; redisplay form
             $formMessageFormatter = new Application_Form_FormMessageFormatter();
             $messages = $formMessageFormatter->getMessagesForAjax($form);
-           
+            
             $data = [
                 'status' => 'failed',
                 'errMsg' => $messages
@@ -45,12 +48,17 @@ class IndexController extends Zend_Controller_Action
             $toAmount = $this->exchangeService->getExchangeInfo($from, $to, $fromAmount);
 
             $this->exchangeService->cacheResult($from, $to, $fromAmount, $toAmount);
-
+                
             $data = [
                     'status' => 'success',
                     'toAmount'    => $toAmount,
                 ];
         }
+        
+        // render new form to set new csrf hash token in session
+        $form2 = new Application_Form_ExchangeForm();
+        $form2->render();
+        $data['token'] = $_SESSION['Zend_Form_Element_Hash_salt_csrf'];
         
         $this->_helper->json($data);
     }

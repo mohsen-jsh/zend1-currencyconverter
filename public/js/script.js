@@ -62,7 +62,7 @@ $(function() {
                         from: from,
                         to: to,
                         amount: amount,
-                        _token: "{!! csrf_token() !!}"}
+                        csrf: $('#csrf').val()}
                 })
                 .done(function (data) {
 
@@ -77,13 +77,26 @@ $(function() {
                 
                 if(data.status === 'success') {
                     $("#exchangeResult").html(data.toAmount);
+                    
+                    // update csrf token
+                    updateCsrfToken(data.token.hash);
                 }
                 else {
                     $("#amount_error").html(data.errMsg.amount);
                     $("#from_error").html(data.errMsg.from);
                     $("#to_error").html(data.errMsg.to);
-                   // $("#exchangeResult").html(data.errMsg);
+                   
+                    // update csrf token
+                    updateCsrfToken(data.token.hash);
                 }
+            }
+            
+            /**
+             * update csrf token input value
+             * 
+             */
+            function updateCsrfToken(hash) {
+                $('#csrf').val(hash);
             }
             
             /**

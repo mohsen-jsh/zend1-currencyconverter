@@ -26,9 +26,10 @@ class Application_Form_ExchangeForm extends Zend_Form
         $this->addElement($username)
             ->addElement($from)
             ->addElement($to);
-       /* $this->addElement('hash', 'csrf', array(
+        $this->addElement('hash', 'csrf', array(
             'ignore' => true,
-        ));*/
+            'timeout' => 900
+        ));
     }
     
     
